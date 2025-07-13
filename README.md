@@ -1,0 +1,16 @@
+# Credit Card Fraud Detection
+---
+
+A repository for anomaly detection on the credit card fraud dataset from the Machine Learning group - ULB. 
+
+Contains three different attempts at achieving the best accuracy and F1-scores on the dataset. Before explaining the models, is is important to note that the dataset was very imbalanced, and had to be rebalanced using the SMOTE method which involves generating synthetic data for the minority class, in this case the fraudulent cases. This aids in preventing overfitting to the majority class. 
+
+The first attempt involved a linear model, the ridge classifier, with the solver set to 'saga', or . This model achieved a F1-score of 0.48, with 0.76 recall and 0.36 precision. These results provide a decent recall percentage of 76, meaning 76% of the fradulent cases were succesfully identified. But a precision of 48% is unusuable in real-world use cases; clients would rather not get pinged that a transaction was fradulent more often than needed. 
+
+The second attempt was with a random forest classifier. This algorithm was chosen due to its strong classification performance and resistance to overfitting. The aggregation of decision from individual trees enables random forest to filter out noise and reduce overfitting from a dataset such as this, where it is highly imbalanced and noisy. The dataset is also moderately high-dimensional, something that the random forest algorithm can handle. Lastly, it enables capture of non-linear patterns in a dataset like this, which partly explains its superior performance over the linear ridge classifer. It does have a drawback of being slow however. The algorithm achieved a F1-score of 86%m with 90% precision and 82% recall; strong performance.
+
+The third phase involved multiple attempts to develop a simple(ish) neural network that could perform stronger than or equal to the random forest classifier. The attempt began with a four-layer, dense architecture, with a sigmoid function as the activation function for the output layer and relu layers elsewhere. There were also normalization and dropout hidden layers. A threshold of 0.5 was applied to the output probabilities to generate binary predictions. This initial model struggled, with a 9% precision and 89% recall, indicating that it was overfitting.
+
+The second iteration of the neural network involved scaling the features with the standard scaler. This removes the mean and scales the data to unit variance, adiing the neural network in learning patterns. After scaling the data, the second iteration of the neural net achieved a F1-score of 75, with 83% recall and 68% precision. This is a decent score, and actually achieves a higher recall than the random forest model, curious!
+
+The third and final attempt was a neural net, with class weight balancing, early stoppage, and a better threshold. This was the solution that I came up with to try to squeeze out more performance on such an imbalanced dataset. This technique gives higher weights to the minority class to address the imbalance in the dataset. After applying this technique, the third iteration of the model achieves a F1-score of 78%, with 84% recall and 73% precision.
